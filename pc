@@ -1,0 +1,133 @@
+import requests
+from lxml import etree
+import pandas as pd
+import numpy as np
+import csv
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+import matplotlib
+from scipy.optimize import leastsq
+import scipy.stats as sts
+import seaborn as sns
+import time
+url =  "https://s.weibo.com/top/summary?Refer=top_hot&topnav=1&wvr=6"
+headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.18362'}
+html = requests.get(url,headers = headers)
+
+html = html.content.decode('utf-8')
+html = etree.HTML(html)
+
+div = html.xpath('//td[@class="td-01 ranktop"]/text()') 
+for a in div:
+    titles = html.xpath('//td[@class="td-02"]/a/text()')
+    numbers = html.xpath('//td[@class="td-02"]/span/text()')
+
+b = []
+for i in range(25):
+    b.append([i+1,titles[i],numbers[i][:-1]])
+file = pd.DataFrame(b,columns = ['名次','名称','搜索数量'])
+
+file.to_csv('微博热搜榜热度数据.csv')
+time.sleep(600)
+html = requests.get(url,headers = headers)
+
+html = html.content.decode('utf-8')
+html = etree.HTML(html)
+
+div = html.xpath('//td[@class="td-01 ranktop"]/text()') 
+for a in div:
+    titles = html.xpath('//td[@class="td-02"]/a/text()')
+    numbers = html.xpath('//td[@class="td-02"]/span/text()')
+with open("微博热搜榜热度数据.csv","r",encoding="utf-8") as csvfile:
+    read = csv.reader(csvfile)
+    for i in read:print(i)
+b = []
+for i in range(25):
+    b.append([i+1,titles[i],numbers[i][:-1]])
+file = pd.DataFrame(b,columns = ['名次','名称','搜索数量'])
+
+file.to_csv('微博热搜榜热度数据2.csv')
+time.sleep(600)
+html = requests.get(url,headers = headers)
+
+html = html.content.decode('utf-8')
+html = etree.HTML(html)
+
+div = html.xpath('//td[@class="td-01 ranktop"]/text()') 
+for a in div:
+    titles = html.xpath('//td[@class="td-02"]/a/text()')
+    numbers = html.xpath('//td[@class="td-02"]/span/text()')
+
+b = []
+for i in range(25):
+    b.append([i+1,titles[i],numbers[i][:-1]])
+file = pd.DataFrame(b,columns = ['名次','名称','搜索数量'])
+
+file.to_csv('微博热搜榜热度数据3.csv')
+time.sleep(600)
+html = requests.get(url,headers = headers)
+
+html = html.content.decode('utf-8')
+html = etree.HTML(html)
+
+div = html.xpath('//td[@class="td-01 ranktop"]/text()') 
+for a in div:
+    titles = html.xpath('//td[@class="td-02"]/a/text()')
+    numbers = html.xpath('//td[@class="td-02"]/span/text()')
+
+b = []
+for i in range(25):
+    b.append([i+1,titles[i],numbers[i][:-1]])
+file = pd.DataFrame(b,columns = ['名次','名称','搜索数量'])
+
+file.to_csv('微博热搜榜热度数据4.csv')
+
+
+
+a = input()
+with open('微博热搜榜热度数据.csv','r',encoding = 'utf-8') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for rowa in reader:
+        if rowa['名称']==a:
+            print(rowa)
+with open('微博热搜榜热度数据2.csv','r',encoding = 'utf-8') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        if row['名称']==a:
+            print(row)
+with open('微博热搜榜热度数据3.csv','r',encoding = 'utf-8') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for rowaa in reader:
+        if rowaa['名称']==a:
+            print(rowaa)
+with open('微博热搜榜热度数据4.csv','r',encoding = 'utf-8') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for rowaa in reader:
+        if rowaa['名称']==a:
+            print(rowaa)
+
+df = pd.DataFrame(pd.read_csv('微博热搜榜热度数据.csv'))
+%matplotlib inline  
+排名 = (df["名次"])
+热度 = (df["搜索数量"])
+plt.rcParams['font.sans-serif']=['SimHei'] #用于正常显示中文标签
+plt.figure(figsize=(8,5))
+plt.scatter(排名,热度,color=[0,0,1,0.4],label=u"样本数据",linewidth=2)  #颜色用RGB值
+plt.title("0",color="blue")
+plt.xlabel("名次")
+plt.ylabel("搜索数量")
+plt.legend()
+plt.grid()
+
+dq = pd.DataFrame(pd.read_csv('微博热搜榜热度数据.csv'))
+%matplotlib inline  
+排名 = (dq["名次"])
+热度 = (dq["搜索数量"])
+plt.rcParams['font.sans-serif']=['SimHei'] #用于正常显示中文标签
+plt.figure(figsize=(8,5))
+plt.scatter(排名,热度,color=[0,0,1,0.4],label=u"样本数据",linewidth=2)  #颜色用RGB值
+plt.title("0",color="blue")
+plt.xlabel("名次")
+plt.ylabel("搜索数量")
+plt.legend()
+plt.grid()
